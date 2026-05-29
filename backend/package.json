@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "electron": "^42.0.1",
+    "recharts": "^3.8.1"
+  }
+}

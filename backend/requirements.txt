@@ -1,0 +1,12 @@
+fastapi
+pymongo
+python-dotenv
+passlib[bcrypt]
+python-jose[cryptography]
+pydantic[email]
+python-multipart
+google-generativeai
+uvicorn
+mediapipe
+opencv-python
+tensorflow
