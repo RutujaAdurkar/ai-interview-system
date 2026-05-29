@@ -1,12 +1,26 @@
+# fastapi
+# pymongo
+# python-dotenv
+# passlib[bcrypt]
+# python-jose[cryptography]
+# pydantic[email]
+# python-multipart
+# google-generativeai
+# uvicorn
+# mediapipe
+# opencv-python
+# tensorflow
+
+
 fastapi
+uvicorn
 pymongo
 python-dotenv
-passlib[bcrypt]
-python-jose[cryptography]
-pydantic[email]
-python-multipart
 google-generativeai
-uvicorn
-mediapipe
-opencv-python
-tensorflow
+python-multipart
+bcrypt
+passlib
+PyJWT
+opencv-python-headless
+numpy
+Pillow
