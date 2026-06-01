@@ -2,6 +2,34 @@ import { useState } from "react"
 import API from "../services/api"
 import { useNavigate } from "react-router-dom"
 
+const getErrorMessage = (error) => {
+  if (!error) return "An unexpected error occurred."
+
+  const detail = error?.response?.data?.detail
+  const message = error?.response?.data?.message || error?.message
+
+  const formatObject = (obj) => {
+    if (!obj) return ""
+    if (typeof obj === "string") return obj
+    if (typeof obj === "object") {
+      if (obj.detail) return formatObject(obj.detail)
+      if (obj.message) return formatObject(obj.message)
+      if (obj.error) return formatObject(obj.error)
+      return JSON.stringify(obj, null, 2)
+    }
+    return String(obj)
+  }
+
+  if (typeof detail === "string") return detail
+  if (Array.isArray(detail)) {
+    return detail.map((item) => formatObject(item)).join(" \n")
+  }
+  if (detail && typeof detail === "object") return formatObject(detail)
+  if (message) return formatObject(message)
+
+  return JSON.stringify(error, null, 2)
+}
+
 export default function ResumeUpload() {
 
   const [file, setFile] = useState(null)
@@ -34,10 +62,7 @@ export default function ResumeUpload() {
       }
     } catch (error) {
       console.log(error)
-      alert(
-        error?.response?.data?.detail ||
-        "Resume upload failed. Please check the file and try again."
-      )
+      alert(getErrorMessage(error))
     }
   }
 
@@ -64,10 +89,7 @@ export default function ResumeUpload() {
       }
     } catch (error) {
       console.log(error)
-      alert(
-        error?.response?.data?.detail ||
-        "Failed to generate questions. Please try again."
-      )
+      alert(getErrorMessage(error))
     }
   }
 
@@ -95,10 +117,7 @@ async () => {
     }
   } catch (error) {
     console.log(error)
-    alert(
-      error?.response?.data?.detail ||
-      "Failed to generate coding questions. Please try again."
-    )
+    alert(getErrorMessage(error))
   }
 }
 

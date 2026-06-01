@@ -2,6 +2,11 @@ import { useState } from "react"
 
 export default function Profile() {
 
+  const [profileImage, setProfileImage] =
+useState(
+  localStorage.getItem("profileImage") || ""
+)
+
   const user = JSON.parse(
     localStorage.getItem("user")
   )
@@ -39,6 +44,27 @@ export default function Profile() {
     alert("Profile Updated")
   }
 
+  const handleImageUpload = (e) => {
+
+  const file = e.target.files[0]
+
+  if (!file) return
+
+  const reader = new FileReader()
+
+  reader.onloadend = () => {
+
+    setProfileImage(reader.result)
+
+    localStorage.setItem(
+      "profileImage",
+      reader.result
+    )
+  }
+
+  reader.readAsDataURL(file)
+}
+
   return (
 
     <div className="min-h-screen bg-slate-950 text-white p-10">
@@ -52,11 +78,46 @@ export default function Profile() {
         {/* LEFT CARD */}
         <div className="glass p-8 rounded-3xl flex flex-col items-center">
 
-          <img
+          {/* <img
             src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
             alt="profile"
             className="w-40 h-40 rounded-full mb-6"
-          />
+          /> */}
+
+          <div className="flex flex-col items-center">
+
+  <label htmlFor="profileUpload">
+
+    <img
+      src={
+        profileImage ||
+        "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+      }
+
+      alt="profile"
+
+      className="
+      w-40
+      h-40
+      rounded-full
+      object-cover
+      cursor-pointer
+      border-4
+      border-blue-500
+      "
+    />
+
+  </label>
+
+  <input
+    type="file"
+    id="profileUpload"
+    accept="image/*"
+    onChange={handleImageUpload}
+    className="hidden"
+  />
+
+</div>
 
           <h2 className="text-3xl font-bold">
             {name}
